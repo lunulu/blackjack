@@ -16,9 +16,11 @@ class Blackjack
 
   def controller(input)
     case input
-    when :add_card then user.add_card
+    when :add_card
+      user.add_card
+      dealer_turn
     when :show_cards then show_cards
-    when :skip_turn then skip_turn
+    when :skip_turn then dealer_turn
     end
   end
 
@@ -32,20 +34,20 @@ class Blackjack
   end
 
   def show_cards
-    if user.score > dealer.score && user.score <= 21
-      1
-    elsif user.score == dealer.score
+    if (user.score > 21 && dealer.score > 21) || user.score == dealer.score
+      user.increase_deposit
+      dealer.increase_deposit
       0
-    elsif user.score < dealer.score && dealer.score <= 21
-      -1
-    elsif user.score > 21 && dealer.score <= 21
+    elsif user.score > 21 || dealer.score > user.score
+      2.times { dealer.increase_deposit }
       -1
     else
+      2.times { user.increase_deposit }
       1
     end
   end
 
-  def skip_turn
+  def dealer_turn
     dealer.add_card if dealer.score < 17
   end
 
