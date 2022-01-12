@@ -6,6 +6,8 @@ class Player
 
   attr_reader :deposit, :cards
 
+  @@deck = Deck.new.shuffle
+
   def initialize
     @deposit = INITIAL_DEPOSIT
     @cards = []
@@ -18,7 +20,7 @@ class Player
   end
 
   def add_card
-    cards << Card.new if cards.size < 3
+    cards << @@deck.pop if cards.size < 3
   end
 
   def delete_cards

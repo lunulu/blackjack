@@ -4,16 +4,17 @@
 class Card
   attr_reader :name, :value, :suit
 
-  def initialize
-    random = rand(1..12)
-    random = 10 if random > 10
-    @value = random
+  def initialize(value, suit)
+    @value = value
     @name = case value
             when 1 then 'A'
-            when 10 then %w[K Q J].sample
+            when 11 then 'J'
+            when 12 then 'Q'
+            when 13 then 'K'
             else value.to_s
             end
-    @suit = %i[diamonds clubs hearts spades].sample
+    @value = 10 if value > 10
+    @suit = suit
   end
 
   private
