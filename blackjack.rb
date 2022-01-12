@@ -2,6 +2,7 @@
 
 require_relative 'card'
 require_relative 'deck'
+require_relative 'hand'
 require_relative 'player'
 require_relative 'dealer'
 require_relative 'user'
@@ -62,7 +63,7 @@ class Blackjack
 
   def prepare_player(player)
     player.decrease_deposit
-    player.delete_cards
+    player.clear_hand
     2.times { player.add_card }
   end
 end

@@ -4,27 +4,29 @@
 class Player
   INITIAL_DEPOSIT = 100
 
-  attr_reader :deposit, :cards
+  attr_reader :deposit, :hand
 
-  @@deck = Deck.new.shuffle
+  @@deck = Deck.new(8).shuffle
 
   def initialize
     @deposit = INITIAL_DEPOSIT
-    @cards = []
+    @hand = Hand.new
   end
 
   def score
-    @score = cards.map(&:value).sum
-    @score += 10 if cards.map(&:name).include?('A') && @score + 10 <= 21
-    @score
+    hand.score
+  end
+
+  def cards
+    hand.cards
   end
 
   def add_card
     cards << @@deck.pop if cards.size < 3
   end
 
-  def delete_cards
-    self.cards = []
+  def clear_hand
+    hand.cards = []
   end
 
   def increase_deposit
@@ -37,5 +39,5 @@ class Player
 
   private
 
-  attr_writer :cards, :deposit, :score
+  attr_writer :deposit, :hand
 end
