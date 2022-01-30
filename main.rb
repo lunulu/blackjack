@@ -8,6 +8,8 @@ require_relative 'blackjack'
 class App
   attr_reader :blackjack
 
+  # TODO: ref this
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def start
     welcome_message
 
@@ -37,8 +39,9 @@ class App
 
     puts 'Хотите сыграть еще раз?'
     puts '1 - Да, любая другая клавиша - Нет'
-    $stdin.getch == '1' ? start : return
+    start if  $stdin.getch == '1'
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   def welcome_message
     system 'clear'
@@ -49,9 +52,10 @@ class App
   def show_cards
     show_cards_message
     case blackjack.controller(:show_cards)
-    when 1 then puts 'Вы победили'.green
-    when 0 then puts 'Ничья'.yellow
-    when -1 then puts 'Вы проиграли'.red
+    when 1 then puts 'Вы победили'.colorize(:green)
+    when 0 then puts 'Ничья'.colorize(:yellow)
+    when -1 then puts 'Вы проиграли'.colorize(:red)
+    else raise RuntimeError
     end
     waiting
     blackjack.start_game

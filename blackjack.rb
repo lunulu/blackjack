@@ -23,6 +23,7 @@ class Blackjack
       dealer_turn
     when :show_cards then show_cards
     when :skip_turn then dealer_turn
+    else raise RuntimeError
     end
   end
 
@@ -35,6 +36,8 @@ class Blackjack
     prepare_player(dealer)
   end
 
+  # TODO: ref this
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def show_cards
     if (user.score > 21 && dealer.score > 21) || user.score == dealer.score
       user.increase_deposit
@@ -48,6 +51,7 @@ class Blackjack
       1
     end
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   def dealer_turn
     dealer.add_card if dealer.score < 17

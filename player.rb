@@ -6,6 +6,7 @@ class Player
 
   attr_reader :deposit, :hand
 
+  # rubocop:disable Style/ClassVars
   @@deck = Deck.new(8).shuffle
 
   def initialize
@@ -24,6 +25,7 @@ class Player
   def add_card
     cards << @@deck.pop if cards.size < 3
   end
+  # rubocop:enable Style/ClassVars
 
   def clear_hand
     hand.cards = []
